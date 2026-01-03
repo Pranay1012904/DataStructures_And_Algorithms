@@ -1,7 +1,5 @@
 package recursion;
 
-import java.util.Arrays;
-
 public class SudokuSolver {
 
     public static void main(String[] args) {
@@ -17,61 +15,59 @@ public class SudokuSolver {
                 {'.', '.', '.', '.', '8', '.', '.', '7', '9'}
 
         };
-        sudoKuSolver(board, 0, 0);
-        //printBoard(board);
-
+        sudokuSolver(board,0,0);
+        printBoard(board);
     }
 
-    public static boolean sudoKuSolver(char[][] board, int row, int col) {
-
-        if (col == board[0].length-1) {
-            col = 0;
-            row++;
+    public static boolean sudokuSolver(char[][] board, int r, int c) {
+        if (c == board.length) {
+            c = 0;
+            r++;
         }
-        if (row == board.length){
-            printBoard(board);
+        if (r == board.length) {
+
             return true;
         }
-
-        if (board[row][col] == '.') {
-            for (char num = '1'; num <= '9'; num++) {
-                if (isSafe(board, row, col, num)) {
-                    board[row][col] = num;
-                    if (sudoKuSolver(board, row, col + 1)) return true;
-                    board[row][col] = '.';
+        if (board[r][c] == '.') {
+            for (char i = '1'; i <= '9'; i++) {
+                if (isSafe(board, r, c, i)) {
+                    board[r][c]=i;
+                    if(sudokuSolver(board,r,c+1)) return true;
+                    board[r][c]='.';
                 }
             }
             return false;
-        } else return sudoKuSolver(board, row, col + 1);
+        } else {
+            return sudokuSolver(board, r, c + 1);
+        }
     }
 
-
-    private static boolean isSafe(char[][] board, int row, int col, char num) {
-        //check column
-        for (int c = 0; c < board.length; c++) {
+    public static boolean isSafe(char[][] board, int row, int col, char num) {
+        //checking row
+        for (int c = 0; c < board.length - 1; c++) {
             if (board[row][c] == num) return false;
         }
-        //check row
+
+        //checking col
         for (int r = 0; r < board.length; r++) {
             if (board[r][col] == num) return false;
         }
-        //check grid
+        //checking grid
         int gr = (row / 3) * 3;
         int gc = (col / 3) * 3;
         for (int r = gr; r < gr + 3; r++) {
             for (int c = gc; c < gc + 3; c++) {
-                if (board[r][c] == num)
-                    return false;
+                if (board[r][c] == num) return false;
             }
         }
+
         return true;
     }
 
-    private static void printBoard(char[][] board) {
-        System.out.println("----------------------------------");
+    public static void printBoard(char[][] board) {
         for (int i = 0; i < board.length; i++) {
-            for (int j = 0; j < board[0].length; j++) {
-                System.out.print(board[i][j] + "\t");
+            for (int j = 0; j < board.length; j++) {
+                System.out.print("\t" + board[i][j]);
             }
             System.out.println();
         }
