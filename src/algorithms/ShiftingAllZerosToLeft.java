@@ -11,23 +11,21 @@ public class ShiftingAllZerosToLeft {
     }
 
     public static void shiftingAllZerosToLeft(int[] arr){
-        int count=0;
-
-        List<Integer> list=new ArrayList<>();
-        for(int i=arr.length-1;i>=0;i--){
-            if(arr[i]==0){
-                count++;
-            }else{
-            list.add(arr[i]);
-            }
-        }
-        int[] arr2=new int[arr.length];
-        for(int i=count;i<arr2.length;i++){
-                arr2[i]=0;
-        }
+       int count=0;
+       List<Integer> l=new ArrayList<>();
+        for(int i=0;i<arr.length;i++){
+           if(arr[i]==0){
+               count++;
+           }else{
+               l.add(arr[i]);
+           }
+       }
         int index=0;
+        int[] arr2=new int[arr.length];
+        for(int i=0;i<count;i++)
+            arr2[i]=0;
         for(int i=count;i<arr2.length;i++){
-            arr2[i]=list.get(index);
+            arr2[i]= l.get(index);
             index++;
         }
         System.out.println(Arrays.toString(arr2));
